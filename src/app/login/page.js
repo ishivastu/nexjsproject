@@ -23,7 +23,7 @@ const LoginPage = () => {
 
       toast.success("Login successful");
 
-      router.push("/"); // redirect after login
+      router.push("/profile");
     } catch (error) {
       console.log("Error", error);
       toast.error("Login failed");
