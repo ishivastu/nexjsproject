@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/db";
 import User from "@/models/userModel"
 import { generateToken } from "@/lib/generateToken";
+import { sendLoginEmail } from "@/lib/mailer";
 
 dbConnect();
 
@@ -20,6 +21,8 @@ export const POST=async(request)=>{
     const isPasswordCorrect=await bcrypt.compare(password,user.password);
 
     if(!isPasswordCorrect) return NextResponse.json({ message: "password wrong" });
+
+    await sendLoginEmail(user.email, user.username);
 
     const response = NextResponse.json({
       message: "Login successful",
